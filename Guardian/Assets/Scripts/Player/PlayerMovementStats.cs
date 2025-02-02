@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Player Movemement Stats")]
 // Player movement scriptable object script from YouTube @Sasquatch B Studios
 public class PlayerMovementStats : ScriptableObject
 {
