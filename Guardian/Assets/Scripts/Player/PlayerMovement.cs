@@ -22,15 +22,42 @@ public class PlayerMovement : MonoBehaviour
     private bool m_bGrounded;
     private bool m_bBumpedHead;
 
+    // jump variables
+    public float VerticalVelocity { get; private set; }
+    private bool m_bJumping;
+    private bool m_bFastFalling;
+    private bool m_bFalling;
+    private float m_fFastFallTime;
+    private float m_fFastFallReleaseSpeed;
+    private int m_iNumberOfJumpsUsed;
+
+    // apex of jump curve variables
+    private float m_fApexPoint;
+    private float m_fTimePastApexThreshold;
+    private bool m_bIsPastApexThreshold;
+
+    // jump buffer variables
+    private float m_fJumpBufferTimer;
+    private float m_fJumpReleasedDuringBuffer;
+
+    // coyote time variables
+    private float m_fCoyoteTimer;
+
     private void Awake()
     {
         m_bFacingRight = true;
         m_PlayerRigidBody = GetComponent<Rigidbody2D>();
     }
 
+    private void Update()
+    {
+        JumpChecks();
+    }
+
     private void FixedUpdate()
     {
         CollisionChecks();
+        Jump();
 
         if (m_bGrounded)
         {
@@ -91,6 +118,23 @@ public class PlayerMovement : MonoBehaviour
             m_bFacingRight = false;
             transform.Rotate(0f, -180f, 0f);
         }
+    }
+
+    #endregion
+    #region Jump
+
+    private void JumpChecks()
+    {
+        // WHEN PLAYER PRESSES THE JUMP BUTTON
+
+        // WHEN PLAYER RELEASES THE JUMP BUTTON
+
+        // INITIATE THE JUMP WITH BUFFERING AND COYOTE TIME
+    }
+
+    private void Jump()
+    {
+
     }
 
     #endregion
