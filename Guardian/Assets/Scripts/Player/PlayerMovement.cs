@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private int m_iNumberOfJumpsUsed;
 
     private bool m_bEndedJumpEarly;
-    private bool m_bJumpToUse = true;
+    private bool m_bJumpToUse = false;
 
     // apex of jump curve variables
     private float m_fTimePastApexThreshold;

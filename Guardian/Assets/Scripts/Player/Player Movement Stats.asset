@@ -25,7 +25,7 @@ MonoBehaviour:
   HeadDetectionRayLength: 0.03
   HeadWidth: 0.75
   JumpPower: 15
-  JumpEndEarlyGravityModifier: 3
+  JumpEndEarlyGravityModifier: 2.5
   MaxFallSpeed: 20
   FallAcceleration: 40
   NumberOfJumpsAllowed: 2
