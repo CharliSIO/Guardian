@@ -45,6 +45,10 @@ public class PlayerMovement : MonoBehaviour
     // coyote time variables
     private float m_fCoyoteTimer;
 
+
+    public ItemPickup InteractableObject = null;
+    public iWeapon CurrentWeapon;
+
     private void Awake()
     {
         m_bFacingRight = true;
@@ -55,6 +59,22 @@ public class PlayerMovement : MonoBehaviour
     {
         JumpChecks();
         CountTimers();
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (InteractableObject != null)
+            {
+                InteractableObject.Interact(this);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            if (CurrentWeapon != null)
+            {
+                CurrentWeapon.Attack();
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -417,8 +437,20 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
+    #region Attack
+    
+    #endregion
+
     private void ApplyMovement()
     {
         m_PlayerRigidBody.velocity = m_MoveVelocity;
+    }
+
+
+
+    // used for testing
+    private void Interact()
+    {
+
     }
 }

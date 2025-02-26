@@ -9,6 +9,8 @@ public interface iWeapon
 
     public void Attack();
 
+    public void SetOwningPlayer(GameObject _Player);
+
     // public void UseWeaponMod1();
     // public void UseWeaponMod2();
 }
@@ -19,14 +21,14 @@ public abstract class BaseWeapon : MonoBehaviour, iWeapon
     public LayerMask AttackingLayer;
     private int iBaseDamage = 1;
 
-    public BaseWeapon(GameObject _Player)
-    {
-        this.OwningPlayer = _Player;
-    }
-
     public int iDamage { get { return iBaseDamage; } }
     protected void setBaseWeaponDamage(int _iDamage) { iBaseDamage = _iDamage; }
     public abstract void Attack();
+
+    public void SetOwningPlayer(GameObject _Player)
+    {
+        this.OwningPlayer = _Player;
+    }
 }
 
 public abstract class BaseMeleeWeapon : BaseWeapon
@@ -34,9 +36,7 @@ public abstract class BaseMeleeWeapon : BaseWeapon
     protected Collider2D MeleeWeaponRangeCollider;
     protected ContactFilter2D MeleeContactFilter;
 
-    public BaseMeleeWeapon(GameObject _Player) : base(_Player) { }
-
-    private void Start()
+    private void Awake()
     {
         MeleeWeaponRangeCollider = GetComponent<Collider2D>();
         MeleeContactFilter.SetLayerMask(AttackingLayer);
@@ -45,21 +45,19 @@ public abstract class BaseMeleeWeapon : BaseWeapon
     // Default melee attack function for melee weapon
     public override void Attack()
     {
+        Debug.Log("Attacked!");
         RaycastHit2D[] AttackCastHits = new RaycastHit2D[3];
         int iNumberEnemiesHit = MeleeWeaponRangeCollider.Cast(transform.forward, MeleeContactFilter, AttackCastHits, MeleeWeaponRangeCollider.bounds.extents.magnitude, true);
-
-        foreach (RaycastHit2D ObjectHit in AttackCastHits)
+        if (iNumberEnemiesHit > 0)
         {
-            iAttackableObject AttackedObj = ObjectHit.collider.GetComponentInParent<iAttackableObject>();
-            if (AttackedObj != null)
+            foreach (RaycastHit2D ObjectHit in AttackCastHits)
             {
-                AttackedObj.GetAttacked(iDamage);
+                iAttackableObject AttackedObj = ObjectHit.collider.GetComponentInParent<iAttackableObject>();
+                if (AttackedObj != null)
+                {
+                    AttackedObj.GetAttacked(iDamage);
+                }
             }
         }
     }
-}
-
-public class PlantSword : BaseMeleeWeapon
-{
-    public PlantSword(GameObject _Player) : base(_Player) { setBaseWeaponDamage(2); }
 }
